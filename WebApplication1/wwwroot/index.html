@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information System</title>
+    <link rel="stylesheet" href="style.css?v=activity5-reports-20260512">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="card shadow-lg" style="width: 400px;">
+            <div class="card-header bg-primary text-white text-center">
+                <h3><i class="fas fa-graduation-cap"></i> Student Information System</h3>
+            </div>
+            <div class="card-body">
+                <div id="loginError" class="alert alert-danger d-none"></div>
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter username">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password">
+                </div>
+                <button onclick="login()" class="btn btn-primary w-100">Login</button>
+                <hr>
+                <button onclick="showForgotPassword()" class="btn btn-link w-100">Forgot Password?</button>
+                <button onclick="showAbout()" class="btn btn-link w-100">About the Program</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Screen -->
+    <div id="forgotPasswordScreen" class="container-fluid vh-100 d-flex align-items-center justify-content-center d-none">
+            <div class="card shadow-lg" style="width: 400px;">
+                <div class="card-header bg-warning text-white text-center">
+                    <h3><i class="fas fa-key"></i> Password Recovery</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Username or Email</label>
+                        <input type="text" id="recoveryUsernameOrEmail" class="form-control" placeholder="Enter username or email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="recoveryEmail" class="form-control" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" id="recoveryNewPassword" class="form-control" placeholder="Enter new password">
+                    </div>
+                    <button onclick="sendRecoveryEmail()" class="btn btn-warning w-100">Change Password</button>
+                    <hr>
+                    <button onclick="showLogin()" class="btn btn-link w-100">Back to Login</button>
+                </div>
+            </div>
+    </div>
+
+    <!-- About Screen -->
+    <div id="aboutScreen" class="container-fluid vh-100 d-flex align-items-center justify-content-center d-none">
+        <div class="card shadow-lg" style="width: 500px;">
+            <div class="card-header bg-info text-white text-center">
+                <h3><i class="fas fa-info-circle"></i> About the Program</h3>
+            </div>
+            <div class="card-body">
+                <h5>Student Information System v1.0</h5>
+                <p>A comprehensive system for managing student enrollments, grades, and courses.</p>
+                <hr>
+                <h6>Features:</h6>
+                <ul>
+                    <li>Student Management</li>
+                    <li>Course Management</li>
+                    <li>Grade Tracking</li>
+                    <li>Report Generation</li>
+                    <li>GPA Computation</li>
+                </ul>
+                <hr>
+                <p><strong>Developed by:</strong> Information Systems Team</p>
+                <p><strong>Course:</strong> Database Systems - Final Project 2024</p>
+                <button onclick="closeAbout()" class="btn btn-info w-100">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboardScreen" class="d-none">
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <i class="fas fa-graduation-cap"></i> Student Information System
+                </span>
+                <div class="d-flex">
+                    <span class="navbar-text text-white me-3">
+                        Welcome, <span id="userName">Admin</span>
+                    </span>
+                    <button onclick="logout()" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-2">
+                    <div class="list-group">
+                        <button onclick="showDashboard()" class="list-group-item list-group-item-action active">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </button>
+                        <button onclick="showStudents()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-users"></i> Students
+                        </button>
+                        <button onclick="showCourses()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-book"></i> Courses
+                        </button>
+                        <button onclick="showEnrollments()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-graduate"></i> Enrollments
+                        </button>
+                        <button onclick="showTransactions()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-receipt"></i> Transactions
+                        </button>
+                        <button onclick="showAccounts()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-shield"></i> Accounts
+                        </button>
+                        <button onclick="showReports()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-chart-bar"></i> Reports
+                        </button>
+                        <button onclick="showAbout()" class="list-group-item list-group-item-action">
+                            <i class="fas fa-info-circle"></i> About
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-10">
+                    <!-- Dashboard Content -->
+                    <div id="dashboardContent">
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card text-white bg-primary">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Students</h5>
+                                        <h2 id="totalStudents">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-success">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Courses</h5>
+                                        <h2 id="totalCourses">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card text-white bg-info">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Average GPA</h5>
+                                        <h2 id="avgGPA">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Recent Enrollments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="recentEnrollmentsTable">
+                                        <thead>
+                                            <tr><th>Student</th><th>Course</th><th>Semester</th><th>Year</th><th>Grade</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Content -->
+                    <div id="studentsContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5>Student Management</h5>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#studentModal" onclick="clearStudentForm()">
+                                    <i class="fas fa-plus"></i> Add Student
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="studentsTable">
+                                        <thead>
+                                            <tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Gender</th><th>Email</th><th>Actions</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Courses Content -->
+                    <div id="coursesContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5>Course Management</h5>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#courseModal" onclick="clearCourseForm()">
+                                    <i class="fas fa-plus"></i> Add Course
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="coursesTable">
+                                        <thead>
+                                            <tr><th>ID</th><th>Course Name</th><th>Course Code</th><th>Units</th><th>Actions</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enrollments Content -->
+                    <div id="enrollmentsContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5>Enrollment Management</h5>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#enrollmentModal" onclick="prepareEnrollmentForm()">
+                                    <i class="fas fa-plus"></i> New Enrollment
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="enrollmentsTable">
+                                        <thead>
+                                            <tr><th>ID</th><th>Student</th><th>Course</th><th>Semester</th><th>Year</th><th>Grade</th><th>Actions</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="accountsContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>User Management</h5>
+                                <div class="d-flex gap-2">
+                                    <input type="text" id="accountSearch" class="form-control" placeholder="Search accounts">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="searchAccounts()">Search</button>
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#accountModal" onclick="clearAccountForm()">
+                                        <i class="fas fa-plus"></i> Add Account
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="accountsTable">
+                                        <thead>
+                                            <tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Linked ID</th><th>Actions</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="transactionsContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>Primary Transactions</h5>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionModal" onclick="prepareTransactionForm()">
+                                    <i class="fas fa-plus"></i> New Transaction
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-3">
+                                        <label>Transaction Type</label>
+                                        <select id="transactionFilterType" class="form-control" onchange="loadTransactions()">
+                                            <option value="All">All</option>
+                                            <option value="Enrollment">Enrollment</option>
+                                            <option value="Course Registration">Course Registration</option>
+                                            <option value="Payment">Payment</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Report Signatory</label>
+                                        <input type="text" id="transactionSignerName" class="form-control" value="Authorized Signatory">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>&nbsp;</label>
+                                        <button class="btn btn-outline-primary form-control" onclick="loadTransactions()">Refresh Grid</button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>&nbsp;</label>
+                                        <button class="btn btn-success form-control" onclick="exportTransactionsToExcel()">
+                                            <i class="fas fa-file-excel"></i> Export Excel
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="transactionStatus" class="alert alert-info d-none mb-3"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="transactionsTable">
+                                        <thead>
+                                            <tr><th>ID</th><th>Student</th><th>Type</th><th>Description</th><th>Date</th><th>Amount</th><th>Status</th></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reports Content -->
+                    <div id="reportsContent" class="d-none">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Report Generator</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label>Report Type</label>
+                                        <select id="reportType" class="form-control">
+                                            <option value="student-academic-performance">Student Academic Performance Report</option>
+                                            <option value="course-popularity-performance">Course Popularity &amp; Performance Report</option>
+                                            <option value="semester-summary-trends">Semester Summary &amp; Trends Report</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Semester (Optional)</label>
+                                        <select id="reportSemester" class="form-control">
+                                            <option value="">All</option>
+                                            <option value="1st">1st Semester</option>
+                                            <option value="2nd">2nd Semester</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Year (Optional)</label>
+                                        <input type="number" id="reportYear" class="form-control" placeholder="2024">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>&nbsp;</label>
+                                        <button onclick="generateReport()" class="btn btn-primary form-control">
+                                            <i class="fas fa-chart-line"></i> Generate
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label>Report Signatory</label>
+                                        <input type="text" id="reportSignerName" class="form-control" value="Authorized Signatory">
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <div id="reportStatus" class="alert alert-info d-none mb-3"></div>
+                                    <table class="table table-bordered" id="reportTable">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <button onclick="exportToExcel()" class="btn btn-success mt-3">
+                                    <i class="fas fa-file-excel"></i> Export to Excel
+                                </button>
+                                <button onclick="exportToCSV()" class="btn btn-info mt-3">
+                                    <i class="fas fa-file-csv"></i> Export to CSV
+                                </button>
+                                <button onclick="printReport()" class="btn btn-secondary mt-3">
+                                    <i class="fas fa-print"></i> Print
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Modal -->
+    <div class="modal fade" id="studentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Student Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="studentId">
+                    <div class="mb-3">
+                        <label>First Name</label>
+                        <input type="text" id="firstName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Gender</label>
+                        <select id="gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Birth Date</label>
+                        <input type="date" id="birthDate" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudent()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Modal -->
+    <div class="modal fade" id="courseModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Course Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="courseId">
+                    <div class="mb-3">
+                        <label>Course Name</label>
+                        <input type="text" id="courseName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Course Code</label>
+                        <input type="text" id="courseCode" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Units</label>
+                        <input type="number" id="units" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveCourse()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div class="modal fade" id="enrollmentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enrollment Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="enrollmentId">
+                    <div class="mb-3">
+                        <label>Student</label>
+                        <select id="enrollmentStudentId" class="form-control" required></select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Course</label>
+                        <select id="enrollmentCourseId" class="form-control" required></select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Semester</label>
+                        <select id="enrollmentSemester" class="form-control">
+                            <option value="1st">1st Semester</option>
+                            <option value="2nd">2nd Semester</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Year</label>
+                        <input type="number" id="enrollmentYear" class="form-control" value="2024">
+                    </div>
+                    <div class="mb-3">
+                        <label>Grade (Optional)</label>
+                        <input type="number" step="0.25" id="enrollmentGrade" class="form-control" placeholder="1.00 - 5.00">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEnrollment()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="accountModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Account Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="accountId">
+                    <div class="mb-3">
+                        <label>Username</label>
+                        <input type="text" id="accountUsername" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" id="accountEmail" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" id="accountPassword" class="form-control" placeholder="Required for new accounts">
+                    </div>
+                    <div class="mb-3">
+                        <label>Role</label>
+                        <select id="accountRole" class="form-control">
+                            <option value="Admin">Admin</option>
+                            <option value="Instructor">Instructor</option>
+                            <option value="Student">Student</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select id="accountStatus" class="form-control">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Suspended">Suspended</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Student ID (for Student role)</label>
+                        <input type="number" id="accountStudentId" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Instructor ID (for Instructor role)</label>
+                        <input type="number" id="accountInstructorId" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAccount()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transactionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Transaction Type</label>
+                        <select id="transactionType" class="form-control" onchange="syncTransactionFields()">
+                            <option value="Enrollment">Enrollment</option>
+                            <option value="Course Registration">Course Registration</option>
+                            <option value="Payment">Payment</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Student</label>
+                        <select id="transactionStudentId" class="form-control"></select>
+                    </div>
+                    <div id="transactionCourseGroup" class="mb-3">
+                        <label>Course</label>
+                        <select id="transactionCourseId" class="form-control"></select>
+                    </div>
+                    <div id="transactionSemesterGroup" class="mb-3">
+                        <label>Semester</label>
+                        <select id="transactionSemester" class="form-control">
+                            <option value="1st">1st Semester</option>
+                            <option value="2nd">2nd Semester</option>
+                            <option value="Summer">Summer</option>
+                        </select>
+                    </div>
+                    <div id="transactionYearGroup" class="mb-3">
+                        <label>Year</label>
+                        <input type="number" id="transactionYear" class="form-control" value="2026">
+                    </div>
+                    <div id="transactionAmountGroup" class="mb-3">
+                        <label>Amount / Registration Fee</label>
+                        <input type="number" step="0.01" id="transactionAmount" class="form-control" placeholder="0.00">
+                    </div>
+                    <div id="transactionPaymentMethodGroup" class="mb-3">
+                        <label>Payment Method</label>
+                        <select id="transactionPaymentMethod" class="form-control">
+                            <option value="Cash">Cash</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Check">Check</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Notes / Description</label>
+                        <textarea id="transactionNotes" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTransaction()">Save Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js?v=activity5-reports-20260512"></script>
+</body>
+</html>

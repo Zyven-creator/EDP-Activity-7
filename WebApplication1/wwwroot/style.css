@@ -1,0 +1,47 @@
+body {
+    background: linear-gradient(135deg, #eef6ff 0%, #f8fbff 45%, #f2fffa 100%);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: 0;
+    border-radius: 18px;
+}
+
+.card-header {
+    border-top-left-radius: 18px !important;
+    border-top-right-radius: 18px !important;
+}
+
+#loginScreen .card,
+#forgotPasswordScreen .card,
+#aboutScreen .card {
+    overflow: hidden;
+}
+
+.navbar,
+.list-group-item,
+.btn,
+.card {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.list-group-item {
+    border: 0;
+    margin-bottom: 8px;
+    border-radius: 12px !important;
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    white-space: nowrap;
+}
+
+.section-title {
+    font-weight: 700;
+}
